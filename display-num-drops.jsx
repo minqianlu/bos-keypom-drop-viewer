@@ -22,17 +22,21 @@ const onBtnClick = () => {
     //   return;
     // }   
 
-    let tempNum = Near.view(
-        keypom_contract, 
-        "getDropSupplyForOwner",
-        {
-            accountId: state.user,
-        }
-    );
-    State.update({
-        num_drops: tempNum,
-        user: "minqi.near"
-    });
+    // Not quite sure how to get number of drops since a promise is returned. Research more
+    async function get_num(acc){
+        let tempNum = await Near.view(
+            keypom_contract, 
+            "get_drop_supply_for_owner",
+            {
+                accountId: acc,
+            }
+        );
+        State.update({
+            num_drops: tempNum,
+            user: "minqi.near"
+        });
+    }
+    get_num(state.user)
 };
 
 
