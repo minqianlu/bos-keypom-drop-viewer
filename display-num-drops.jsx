@@ -6,7 +6,7 @@ const keypom_contract = "v2.keypom.near";
 
 // Use and manipulate state
 State.init({ 
-    num_drops: 0,
+    num_drops: 100000,
     user: context.accountId
 });
 
@@ -22,28 +22,24 @@ const onBtnClick = () => {
     //   return;
     // }   
 
-    // Not quite sure how to get number of drops since a promise is returned. Research more
-    async function get_num(acc){
-        let tempNum = await Near.view(
-            keypom_contract, 
-            "get_drop_supply_for_owner",
-            {
-                accountId: acc,
-            }
-        );
-        State.update({
-            num_drops: tempNum,
-            user: "minqi.near"
-        });
-    }
-    get_num(state.user)
+    let tempNum = Near.view(
+        keypom_contract, 
+        "get_drop_supply_for_owner",
+        {
+            account_id: state.user,
+        }
+    );
+    State.update({
+        num_drops: tempNum,
+        user: state.user
+    });
 };
 
 
 const get_user_form = (
     <>
     <div class="border border-black p-3">
-      <label>User ID</label>
+      <label>User Account ID</label>
       <input placeholder="benji.near" onChange={onInputChange} />
       <button class="btn btn-primary mt-2" onClick={onBtnClick}>
         Update
