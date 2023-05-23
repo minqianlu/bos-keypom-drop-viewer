@@ -13,7 +13,7 @@ State.init({
 const keypom_contract = "v2.keypom.near";
 let my_drops = Near.view(keypom_contract, "get_drops_for_owner", {
     // account_id: context.accountId,
-    account_id: "keypom.near",
+    account_id: "root.benjiman.near",
 });
 
 let drop_ids = [];
